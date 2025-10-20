@@ -1,33 +1,82 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chúc 20/10</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 20/10 💖</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
+      background: linear-gradient(135deg, #ffe6f0, #ffd1dc);
+      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    .container {
+      overflow: hidden;
+      font-family: "Poppins", sans-serif;
       text-align: center;
+      position: relative;
     }
 
+    /* Trái tim chính giữa */
+    .heart {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -60px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 60px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1) rotate(-45deg);
+      }
+      50% {
+        transform: scale(1.2) rotate(-45deg);
+      }
+    }
+
+    /* Hiệu ứng chữ gõ từng ký tự */
     .text {
+      margin-top: 40px;
       font-size: 24px;
-      white-space: pre-line; /* cho phép xuống dòng khi gặp \n */
+      color: #d63384;
+      white-space: pre-line;
       border-right: 3px solid rgba(0, 0, 0, 0.75);
       width: fit-content;
       margin: 0 auto;
-      color: #d63384;
-      font-weight: 600;
       animation: blinkCursor 0.8s infinite;
+      font-weight: 600;
+      z-index: 2;
     }
 
     @keyframes blinkCursor {
@@ -35,28 +84,79 @@
         border-color: transparent;
       }
     }
+
+    /* Hiệu ứng tim bay nền */
+    .floating-heart {
+      position: absolute;
+      bottom: 0;
+      color: rgba(255, 0, 0, 0.7);
+      animation: floatUp linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 14px;
+      color: #555;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="text" id="typingText"></div>
-  </div>
+  <div class="heart"></div>
+
+  <div class="text" id="typingText"></div>
+
+  <!-- Nhạc nền -->
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/10/audio_13cf5ad2a1.mp3?filename=romantic-piano-144186.mp3" type="audio/mp3" />
+  </audio>
+
+  <div class="footer">Made with 💖 by Bi</div>
 
   <script>
-    const text = "Chúc bé Lan 20/10 thật vui vẻ\nvà xinh đẹp 💐"; // \n giúp xuống hàng
+    // Hiệu ứng gõ chữ
+    const text = "Chúc bé Lan 20/10 thật vui vẻ\nvà xinh đẹp 💐";
     const textContainer = document.getElementById("typingText");
-
     let index = 0;
 
     function typeEffect() {
       if (index < text.length) {
         textContainer.textContent += text[index];
         index++;
-        setTimeout(typeEffect, 100); // chỉnh tốc độ gõ chữ ở đây (ms)
+        setTimeout(typeEffect, 100);
       }
     }
-
     typeEffect();
+
+    // Tạo hiệu ứng tim bay
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("floating-heart");
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      heart.style.animationDuration = Math.random() * 4 + 4 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    setInterval(createHeart, 300);
   </script>
 </body>
 </html>
