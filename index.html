@@ -3,100 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy 20/10 💖</title>
+  <title>Chúc 20/10</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      background: linear-gradient(135deg, #ffe6f0, #ffd1dc);
-      height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffd1dc, #ffe6f0);
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .container {
       text-align: center;
     }
 
-    .heart {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      background: red;
-      transform: rotate(-45deg);
-      animation: pulse 1s infinite;
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
-    }
-
-    .heart::before, .heart::after {
-      content: "";
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      background: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -60px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: 60px;
-      top: 0;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1) rotate(-45deg); }
-      50% { transform: scale(1.2) rotate(-45deg); }
-    }
-
     .text {
-      margin-top: 40px;
       font-size: 24px;
+      white-space: pre-line; /* cho phép xuống dòng khi gặp \n */
+      border-right: 3px solid rgba(0, 0, 0, 0.75);
+      width: fit-content;
+      margin: 0 auto;
       color: #d63384;
-      white-space: normal;
-      overflow: hidden;
-      border-right: 3px solid;
-      display: inline-block;
-      animation: typing 5s steps(50, end) forwards, blink 0.7s step-end infinite;
-      max-width: 90%;
+      font-weight: 600;
+      animation: blinkCursor 0.8s infinite;
     }
 
-    @keyframes typing {
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 14px;
-      color: #555;
+    @keyframes blinkCursor {
+      50% {
+        border-color: transparent;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="heart"></div>
-
-  <div class="text">
-    Chúc bé Lan 20/10 thật vui vẻ <br>và xinh đẹp 💐
+  <div class="container">
+    <div class="text" id="typingText"></div>
   </div>
 
-  <!-- Nhạc nền -->
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/10/audio_13cf5ad2a1.mp3?filename=romantic-piano-144186.mp3" type="audio/mp3">
-  </audio>
+  <script>
+    const text = "Chúc bé Lan 20/10 thật vui vẻ\nvà xinh đẹp 💐"; // \n giúp xuống hàng
+    const textContainer = document.getElementById("typingText");
 
-  <div class="footer">Made with 💖 by Bi</div>
+    let index = 0;
+
+    function typeEffect() {
+      if (index < text.length) {
+        textContainer.textContent += text[index];
+        index++;
+        setTimeout(typeEffect, 100); // chỉnh tốc độ gõ chữ ở đây (ms)
+      }
+    }
+
+    typeEffect();
+  </script>
 </body>
 </html>
